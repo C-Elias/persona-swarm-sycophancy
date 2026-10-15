@@ -6,6 +6,10 @@ This note describes an approach I designed and piloted for **simulation-based ev
 
 It is an approach note, not a results paper. The pilot ran on proprietary data, so no data, outputs or identifying details are published here. Everything below is method and lessons.
 
+## Design idea: compute-scaled simulation
+
+The approach borrows its shape from computational fluid dynamics. The Navier-Stokes equations are rarely solved analytically; instead, compute is thrown at a numerical simulation and the behaviour of the flow emerges from many small interactions. A persona swarm does the same for a research question: rather than reasoning about customers in the abstract, scaled groups of agents are directed at the problem, and the answer emerges from many simulated conversations. The shape is domain-agnostic. The pilot targeted product research for evaluation features, but the same structure (personas from real conversations, interviewers, judges, a baseline and a validation step) carries over to other industries unchanged.
+
 ---
 
 ## Why this matters for AI safety
@@ -68,9 +72,9 @@ flowchart LR
 ## Safeguards that turned out to be necessary
 
 1. **Score the subject's speech only.** Transcripts contain both sides of a conversation. Coverage scoring initially counted the vendor's own speech as evidence about the customer, which inflated coverage. Scoring now counts customer speech only. The same contamination can leak into personas: a persona built from a transcript can learn to sound like the interviewer.
-2. **Beat a single-prompt baseline before scaling.** A blind comparison showed that one strong-model prompt could match the swarm on a simple question. So the rule became: the next, larger pilot must outperform a single strong prompt before any more compute is spent. Many agents are not automatically more signal than one good prompt.
+2. **Beat a single-prompt baseline before scaling.** The baseline is one strong-model prompt given the same source material, about 30,000 words of transcripts. A blind comparison showed that this single prompt could match the swarm on a simple question. So the rule became: the next, larger pilot must outperform a single strong prompt before any more compute is spent. Many agents are not automatically more signal than one good prompt.
 3. **Stage the compute.** A small pilot budget, then a larger pool only after the baseline gate. Multi-agent runs are expensive and can exceed standard account limits; open-weight models are the obvious way to cut cost per run.
-4. **Validate against reality.** Simulated findings are treated as hypotheses for real interviews, never as conclusions. A statistical method for comparing simulated and real responses is part of the design; a colleague owns that part.
+4. **Validate against reality.** Simulated findings are treated as hypotheses, never as conclusions, until real interviews confirm them. In the pilot, the swarm's findings were compared against a separate set of real customer interviews, which validated them. A statistical method for comparing simulated and real responses is part of the design; a colleague owns that part.
 5. **Seek invalidation, not validation.** Discussion guides must give the persona every chance to say the hypothesis is wrong, and must ask what is must-have versus deferrable. A guide that only lets a persona agree is measuring the guide.
 
 
@@ -144,7 +148,7 @@ flowchart LR
 
 ## Status
 
-Ongoing. Approach note written October 2026. The pilot ran on proprietary data that cannot be shared; the experiments above are designed to run on synthetic personas with fixed ground truth, so they can be published in full.
+Ongoing. Approach note written October 2026. The pilot's findings were validated against real customer interviews; the pilot ran on proprietary data that cannot be shared, so its outputs are not published here; the experiments above are designed to run on synthetic personas with fixed ground truth, so they can be published in full.
 
 ## Author
 
